@@ -20,7 +20,7 @@ pipeline {
 
         stage('AWS Identity') {
             steps {
-                sh 'aws sts get-caller-identity'
+                sh 'aws sts get-caller-identity --profile terraform-learning'
             }
         }
 
