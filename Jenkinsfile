@@ -1,6 +1,10 @@
 pipeline {
     agent any
 
+    environment {
+        AWS_PROFILE = 'terraform-learning'
+    }
+
     options {
         timestamps()
         disableConcurrentBuilds()
@@ -11,6 +15,12 @@ pipeline {
         stage('Checkout') {
             steps {
                 checkout scm
+            }
+        }
+
+        stage('AWS Identity') {
+            steps {
+                sh 'aws sts get-caller-identity'
             }
         }
 
