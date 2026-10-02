@@ -40,7 +40,20 @@ pipeline {
 
         stage('Terraform Plan') {
             steps {
-                sh 'terraform plan -input=false -no-color'
+                sh 'terraform plan -input=false -out=tfplan'
+            }
+        }
+
+        stage('Approval') {
+            steps {
+                input message: 'Terraform plan is ready. Apply these changes to AWS?',
+                    ok: 'Apply'
+            }
+        }
+
+        stage('Terraform Apply') {
+            steps {
+                sh 'terraform apply -input=false tfplan'
             }
         }
     }
